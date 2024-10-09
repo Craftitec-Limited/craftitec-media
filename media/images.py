@@ -102,8 +102,7 @@ async def store_image(
             )
         
 
-        if not path.exists(folder):
-            mkdir(folder)
+        await check_path_exists(folder)
 
         file_path = f"{folder}/{image_name}"
         
@@ -126,6 +125,33 @@ async def store_image(
             chmod(file_path,0o644)
         
         return f"{masking_folder}/{image_name}"
+    except Exception as exc:
+        raise Exception(str(exc))
+
+
+async def check_path_exists(media_path: str):
+    """
+        Check if the path exists
+
+        Args:
+            media_path: The path to check
+        
+        ## Workings:
+        - Splits the path by forward slashes
+        - Runs a loop that keeps checking if the path exists and creates it if it doesn't
+
+        Returns:
+            None
+    """
+    try:
+        split_path = media_path.split("/")
+        current_path = split_path[0]
+
+        for i in range(1, len(split_path)):
+            current_path += f"/{split_path[i]}"
+            if not path.exists(current_path):
+                mkdir(current_path)
+        
     except Exception as exc:
         raise Exception(str(exc))
 
