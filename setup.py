@@ -21,5 +21,5 @@ setup(
     ],
     install_requires=required,
     license="MIT",
-    url="https://github.com/AyobamitheTitan/media",
+    url="https://github.com/Craftitec-Limited/media",
 )
